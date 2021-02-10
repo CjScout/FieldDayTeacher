@@ -1,12 +1,10 @@
-// FieldDayTeacher.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include "Headers.h"
 
 sf::TcpSocket serverLink;
 sf::Packet packet;
 
 string input;
+string task;
 
 string id = "Griffin";
 string action;
@@ -33,6 +31,28 @@ int main()
         packet << id << action << value;
 
         serverLink.send(packet);
+        
+        serverLink.recieve(packet);
+        
+        packet >> task;
+        
+        cout << "You have been given the task: " << task << endl;
+        cout << "Press 1 and then ENTER to complete the task" << endl << "Press 2 and then ENTER to skip this task" << endl;
+        cin >> input;
+        
+        if (input == "1")
+        {
+            value = 1;
+            packet << value;
+            serverLink.send(packet);
+        }
+        
+        if (input == 2)
+        {
+            value = 2;
+            packet << value;
+            serverLink.send(packet);
+        }
     }
 
     if (input == "2")
