@@ -2,6 +2,7 @@
 
 sf::TcpSocket serverLink;
 sf::Packet packet;
+sf::Packet packet2;
 
 string input;
 string task;
@@ -32,9 +33,9 @@ int main()
 
         serverLink.send(packet);
         
-        serverLink.recieve(packet);
+        serverLink.receive(packet2);
         
-        packet >> task;
+        packet2 >> task;
         
         cout << "You have been given the task: " << task << endl;
         cout << "Press 1 and then ENTER to complete the task" << endl << "Press 2 and then ENTER to skip this task" << endl;
@@ -47,7 +48,7 @@ int main()
             serverLink.send(packet);
         }
         
-        if (input == 2)
+        if (input == "2")
         {
             value = 2;
             packet << value;
